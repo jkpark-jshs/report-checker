@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>실험 보고서 형식 검사기</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark">LAB</span>
+      <div>
+        <h1>실험 보고서 형식 검사기</h1>
+        <p>제출하기 전에, 감점 받을 형식 오류를 먼저 잡는다.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel editor">
+      <div class="panel-head">
+        <h2>보고서</h2>
+        <div class="actions">
+          <label class="btn primary" for="fileInput">파일 열기</label>
+          <input type="file" id="fileInput" accept=".hwpx,.docx,.txt,.hwp" hidden>
+          <button class="btn" id="sampleBad">예시: 고치기 전</button>
+          <button class="btn" id="sampleGood">예시: 고친 후</button>
+          <button class="btn ghost" id="clearBtn">지우기</button>
+        </div>
+      </div>
+      <p class="hint" id="fileStatus">.hwpx, .docx, .txt 파일을 열거나 아래에 붙여 넣으세요. 쓰는 즉시 검사합니다.</p>
+      <textarea id="input" spellcheck="false" placeholder="1. 실험 목적&#10;...&#10;2. 이론적 배경&#10;..."></textarea>
+    </section>
+
+    <section class="panel result">
+      <div class="score-row">
+        <div class="score" id="score">
+          <span class="num" id="scoreNum">-</span>
+          <span class="unit">점</span>
+        </div>
+        <div class="counts">
+          <button class="count error" data-filter="error"><b id="cError">0</b>오류</button>
+          <button class="count warn" data-filter="warn"><b id="cWarn">0</b>주의</button>
+          <button class="count info" data-filter="info"><b id="cInfo">0</b>권장</button>
+          <button class="count all active" data-filter="all"><b id="cAll">0</b>전체</button>
+        </div>
+      </div>
+
+      <div class="sections" id="sectionChips"></div>
+
+      <ol class="issues" id="issueList"></ol>
+
+      <div class="record-row">
+        <input type="text" id="recordLabel" placeholder="기록 이름 (예: 1번 보고서 수정 전)">
+        <button class="btn primary" id="recordBtn">이 결과 기록</button>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel wide">
+    <details>
+      <summary>검사 설정 <span class="sub">선생님 양식에 맞게 필수 항목과 검사 규칙을 켜고 끕니다</span></summary>
+      <div class="settings">
+        <div>
+          <h3>필수 항목</h3>
+          <div id="requiredBox" class="checks"></div>
+        </div>
+        <div>
+          <h3>검사 규칙</h3>
+          <div id="checksBox" class="checks"></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="panel wide">
+    <div class="panel-head">
+      <h2>검사 기록 <span class="sub">수정 전후 오류 수를 비교해 효과를 확인합니다</span></h2>
+      <div class="actions">
+        <button class="btn" id="csvBtn">CSV 내려받기</button>
+        <button class="btn ghost" id="clearHistory">기록 지우기</button>
+      </div>
+    </div>
+    <table class="history">
+      <thead><tr><th>시각</th><th>이름</th><th>오류</th><th>주의</th><th>권장</th><th>점수</th></tr></thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+  </section>
+
+  <footer>2026 전곽 SW 경시대회 출품작 · 입력한 보고서는 서버로 보내지 않고 이 브라우저 안에서만 검사합니다.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/checker.js"></script>
+  <script src="js/samples.js"></script>
+  <script src="js/fileReader.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
